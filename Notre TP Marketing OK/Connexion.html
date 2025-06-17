@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KISHIBISHA - Connexion/Inscription</title>
+    <style>
+      /* Styles CSS cohérents avec le site existant */
+      :root {
+        --primary-color: #e74c3c;
+        --secondary-color: #3498db;
+        --dark-color: #2c3e50;
+        --light-color: #ecf0f1;
+        --text-dark: #333;
+        --text-light: #fff;
+        --bg-light: #fff;
+        --bg-dark: #1a1a1a;
+        --card-bg-light: #f9f9f9;
+        --card-bg-dark: #2d2d2d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      body.dark-mode {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        background-color: var(--primary-color);
+        color: var(--text-light);
+        padding: 1rem 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .dark-mode header {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 1.5rem;
+      }
+
+      nav ul li a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+
+      nav ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+      }
+
+      .theme-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Styles spécifiques à la page de connexion/inscription */
+      .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        padding: 2rem 0;
+      }
+
+      .auth-tabs {
+        display: flex;
+        margin-bottom: 1.5rem;
+        border-bottom: 2px solid var(--primary-color);
+      }
+
+      .auth-tab {
+        padding: 0.8rem 1.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: var(--text-dark);
+        transition: all 0.3s;
+      }
+
+      .dark-mode .auth-tab {
+        color: var(--text-light);
+      }
+
+      .auth-tab.active {
+        background-color: var(--primary-color);
+        color: white;
+      }
+
+      .auth-form {
+        background-color: var(--card-bg-light);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 500px;
+      }
+
+      .dark-mode .auth-form {
+        background-color: var(--card-bg-dark);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+      }
+
+      .form-group input,
+      .form-group select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      .dark-mode .form-group input,
+      .dark-mode .form-group select {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        border-color: #444;
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: var(--text-light);
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        width: 100%;
+        font-size: 1.1rem;
+      }
+
+      .btn:hover {
+        background-color: #c0392b;
+      }
+
+      .form-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+      }
+
+      .form-footer a {
+        color: var(--primary-color);
+        text-decoration: none;
+      }
+
+      .dark-mode .form-footer a {
+        color: #ff6b6b;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      footer {
+        background-color: var(--dark-color);
+        color: var(--text-light);
+        padding: 2rem 0;
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      @media (max-width: 768px) {
+        .header-container {
+          flex-direction: column;
+        }
+
+        nav ul {
+          margin-top: 1rem;
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
+        nav ul li {
+          margin: 0.5rem;
+        }
+
+        .auth-form {
+          padding: 1.5rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .auth-tabs {
+          flex-direction: column;
+          border-bottom: none;
+        }
+
+        .auth-tab {
+          border-bottom: 2px solid var(--primary-color);
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-container">
+        <div class="logo">KISHIBISHA</div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="reservation.html">Réservation</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li>
+              <a href="Connexion.html" class="active">Connexion/Inscription</a>
+            </li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="container auth-container">
+        <div class="auth-form">
+          <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchTab('login')">
+              Connexion
+            </button>
+            <button class="auth-tab" onclick="switchTab('register')">
+              Inscription
+            </button>
+          </div>
+
+          <!-- Formulaire de Connexion -->
+          <form id="login-form" class="auth-content">
+            <div class="form-group">
+              <label for="login-email">Email</label>
+              <input type="email" id="login-email" required />
+            </div>
+            <div class="form-group">
+              <label for="login-password">Mot de passe</label>
+              <input type="password" id="login-password" required />
+            </div>
+            <button type="submit" class="btn">Se connecter</button>
+            <div class="form-footer">
+              <a href="#">Mot de passe oublié ?</a>
+            </div>
+          </form>
+
+          <!-- Formulaire d'Inscription -->
+          <form id="register-form" class="auth-content hidden">
+            <div class="form-group">
+              <label for="register-nom">Nom</label>
+              <input type="text" id="register-nom" required />
+            </div>
+            <div class="form-group">
+              <label for="register-prenom">Prénom</label>
+              <input type="text" id="register-prenom" required />
+            </div>
+            <div class="form-group">
+              <label for="register-email">Email</label>
+              <input type="email" id="register-email" required />
+            </div>
+            <div class="form-group">
+              <label for="register-password">Mot de passe</label>
+              <input type="password" id="register-password" required />
+            </div>
+            <div class="form-group">
+              <label for="register-confirm">Confirmer le mot de passe</label>
+              <input type="password" id="register-confirm" required />
+            </div>
+            <div class="form-group">
+              <label for="register-gender">Sexe</label>
+              <select id="register-gender" required>
+                <option value="">Sélectionner</option>
+                <option value="male">Masculin</option>
+                <option value="female">Féminin</option>
+                <option value="other">Autre</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="register-phone">Téléphone</label>
+              <input type="tel" id="register-phone" />
+            </div>
+            <div class="form-group">
+              <input type="checkbox" id="register-newsletter" />
+              <label for="register-newsletter">S'abonner à la newsletter</label>
+            </div>
+            <button type="submit" class="btn">S'inscrire</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <div class="logo" style="margin-bottom: 1rem">KISHIBISHA</div>
+        <div class="social-links">
+          <a href="https://x.com/JustinMuganzaL?t=iWLivT1lK_VADpCVCRcfKA&s=09"
+            >𝕏</a
+          >
+          <a href="https://www.facebook.com/justinlubungamuganza.muganza">f</a>
+          <a href="https://www.google.com">📱</a>
+        </div>
+        <p>© 2025 BAC 2 IG GROUPE 1 TP MARKETING TOUS DROIT RÉSERVÉ</p>
+      </div>
+    </footer>
+
+    <script>
+      // Gestion du thème clair/sombre
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark-mode")
+        );
+      }
+
+      // Vérifier le thème au chargement
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+
+      // Gestion des onglets
+      function switchTab(tabName) {
+        const tabs = document.querySelectorAll(".auth-tab");
+        const forms = document.querySelectorAll(".auth-content");
+
+        tabs.forEach((tab) => tab.classList.remove("active"));
+        forms.forEach((form) => form.classList.add("hidden"));
+
+        document
+          .querySelector(`.auth-tab[onclick="switchTab('${tabName}')"]`)
+          .classList.add("active");
+        document.getElementById(`${tabName}-form`).classList.remove("hidden");
+      }
+
+      // Validation des formulaires
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          alert("Connexion en cours...");
+          // Ici, ajouter la logique de connexion réelle
+        });
+
+      document
+        .getElementById("register-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const password = document.getElementById("register-password").value;
+          const confirm = document.getElementById("register-confirm").value;
+
+          if (password !== confirm) {
+            alert("Les mots de passe ne correspondent pas !");
+            return;
+          }
+
+          alert("Inscription réussie !");
+          // Ici, ajouter la logique d'inscription réelle
+        });
+
+      // Synchroniser le thème entre les pages
+      window.addEventListener("storage", function (e) {
+        if (e.key === "darkMode") {
+          document.body.classList.toggle("dark-mode", e.newValue === "true");
+        }
+      });
+    </script>
+  </body>
+</html>

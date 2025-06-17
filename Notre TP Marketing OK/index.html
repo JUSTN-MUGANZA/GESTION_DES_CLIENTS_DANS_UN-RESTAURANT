@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Restaurant KISHIBISHA - Accueil</title>
+    <style>
+      /* Styles CSS pour la page d'accueil */
+      :root {
+        --primary-color: #e74c3c;
+        --secondary-color: #3498db;
+        --dark-color: #2c3e50;
+        --light-color: #ecf0f1;
+        --text-dark: #333;
+        --text-light: #fff;
+        --bg-light: #fff;
+        --bg-dark: #1a1a1a;
+        --card-bg-light: #f9f9f9;
+        --card-bg-dark: #2d2d2d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      body.dark-mode {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        background-color: var(--primary-color);
+        color: var(--text-light);
+        padding: 1rem 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .dark-mode header {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 1.5rem;
+      }
+
+      nav ul li a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+
+      nav ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+      }
+
+      .theme-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80");
+        background-size: cover;
+        background-position: center;
+        height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: var(--text-light);
+        margin-bottom: 2rem;
+      }
+
+      .hero-content h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero-content p {
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+        max-width: 800px;
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: var(--text-light);
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .btn:hover {
+        background-color: #c0392b;
+      }
+
+      .features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .feature-card {
+        text-align: center;
+        padding: 2rem;
+        background-color: var(--card-bg-light);
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .dark-mode .feature-card {
+        background-color: var(--card-bg-dark);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      .feature-card i {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+
+      footer {
+        background-color: var(--dark-color);
+        color: var(--text-light);
+        padding: 2rem 0;
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .social-links {
+        margin: 1rem 0;
+      }
+
+      .social-links a {
+        color: var(--text-light);
+        margin: 0 0.5rem;
+        font-size: 1.5rem;
+        text-decoration: none;
+      }
+
+      @media (max-width: 768px) {
+        .header-container {
+          flex-direction: column;
+        }
+
+        nav ul {
+          margin-top: 1rem;
+        }
+
+        nav ul li {
+          margin-left: 1rem;
+          margin-right: 1rem;
+        }
+
+        .hero-content h1 {
+          font-size: 2rem;
+        }
+
+        .hero-content p {
+          font-size: 1rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        nav ul {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        nav ul li {
+          margin: 0.5rem 0;
+        }
+
+        .hero {
+          height: 50vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container header-container">
+        <div class="logo">KISHIBISHA</div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="reservation.html">Réservation</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="Connexion.html">Connexion/Inscription</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+      </div>
+    </header>
+
+    <main>
+      <div class="hero">
+        <div class="hero-content">
+          <h1>Bienvenue au Restaurant KISHIBISHA</h1>
+          <p>
+            Découvrez une expérience culinaire exceptionnelle avec nos plats
+            préparés avec des ingrédients frais et locaux.
+          </p>
+          <a href="reservation.html" class="btn">Réserver une table</a>
+        </div>
+      </div>
+
+      <div class="container">
+        <section>
+          <h2
+            style="
+              text-align: center;
+              margin-bottom: 2rem;
+              font-size: 2rem;
+              color: var(--primary-color);
+            "
+          >
+            Nos Services
+          </h2>
+          <div class="features">
+            <div class="feature-card">
+              <i>🍽️</i>
+              <h3>Cuisine raffinée</h3>
+              <p>
+                Notre chef étoilé prépare des plats exceptionnels avec des
+                produits de saison.
+              </p>
+            </div>
+            <div class="feature-card">
+              <i>🍷</i>
+              <h3>Carte des vins</h3>
+              <p>
+                Une sélection exceptionnelle de vins pour accompagner vos plats.
+              </p>
+            </div>
+            <div class="feature-card">
+              <i>🎉</i>
+              <h3>Événements</h3>
+              <p>Organisez vos événements privés dans notre espace dédié.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container footer-content">
+        <div class="logo" style="margin-bottom: 1rem">KISHIBISHA</div>
+        <div class="social-links">
+          <a href="https://x.com/JustinMuganzaL?t=iWLivT1lK_VADpCVCRcfKA&s=09"
+            >𝕏</a
+          >
+          <a href="https://www.facebook.com/justinlubungamuganza.muganza">f</a>
+          <a href="https://www.google.com">📱</a>
+        </div>
+        <p>© 2025 BAC 2 IG GROUPE 1 TP MARKETING TOUS DROIT RÉSERVÉ</p>
+      </div>
+    </footer>
+
+    <script>
+      // Gestion du thème clair/sombre
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark-mode")
+        );
+      }
+
+      // Vérifier le thème au chargement
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+
+      // Synchroniser le thème entre les pages
+      window.addEventListener("storage", function (e) {
+        if (e.key === "darkMode") {
+          document.body.classList.toggle("dark-mode", e.newValue === "true");
+        }
+      });
+    </script>
+  </body>
+</html>

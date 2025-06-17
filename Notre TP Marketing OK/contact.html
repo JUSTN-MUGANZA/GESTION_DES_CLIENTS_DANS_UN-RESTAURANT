@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CHANGEMENT 1: Titre de la page mis à jour -->
+    <title>Restaurant KISHIBISHA - Contact</title>
+    <style>
+      /* Styles CSS (identiques à la page d'accueil) */
+      :root {
+        /* J'ai repris la palette de couleurs dorée de la version précédente, car elle est plus chaleureuse */
+        --primary-color: #000000;
+        --secondary-color: #3498db;
+        --dark-color: #f10707;
+        --light-color: #f8f9fa;
+        --text-dark: #333;
+        --text-light: #f1f1f1;
+        --bg-light: #fff;
+        --bg-dark: #222;
+        --card-bg-light: #fdfdfd;
+        --card-bg-dark: #2d2d2d;
+        --border-color: #ddd;
+        --border-color-dark: #ffffff;
+        --success-color: #2ecc71;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      body.dark-mode {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        background-color: var(
+          --dark-color
+        ); /* Utilisation d'une couleur plus sobre pour l'en-tête */
+        color: var(--text-light);
+        padding: 1rem 0;
+        box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: var(--primary-color);
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 1.5rem;
+      }
+
+      nav ul li a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+      }
+
+      nav ul li a:hover {
+        background-color: rgba(255, 0, 0, 0.1);
+      }
+
+      /* CHANGEMENT 2: Style pour le lien de navigation actif */
+      nav ul li a.active {
+        color: var(--primary-color);
+        font-weight: bold;
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: var(--text-light);
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.2s;
+      }
+
+      .btn:hover {
+        background-color: #ff0000;
+        transform: translateY(-2px);
+      }
+
+      .btn-block {
+        display: block;
+        width: 100%;
+      }
+
+      footer {
+        background-color: var(--dark-color);
+        color: var(--text-light);
+        padding: 2rem 0;
+        text-align: center;
+        margin-top: 2rem;
+      }
+
+      /* CHANGEMENT 3: NOUVEAUX STYLES SPÉCIFIQUES À LA PAGE CONTACT */
+      .page-header {
+        background-color: var(--card-bg-light);
+        padding: 3rem 0;
+        text-align: center;
+        margin-bottom: 3rem;
+        border-bottom: 1px solid var(--border-color);
+      }
+      .dark-mode .page-header {
+        background-color: var(--card-bg-dark);
+        border-bottom: 1px solid var(--border-color-dark);
+      }
+      .page-header h1 {
+        font-size: 2.5rem;
+        color: var(--primary-color);
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 3rem;
+        align-items: start;
+      }
+
+      .contact-details,
+      .contact-form-container {
+        padding: 2rem;
+        background-color: var(--card-bg-light);
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(255, 0, 0, 0.08);
+      }
+      .dark-mode .contact-details,
+      .dark-mode .contact-form-container {
+        background-color: var(--card-bg-dark);
+        box-shadow: none;
+        border: 1px solid var(--border-color-dark);
+      }
+
+      .contact-details h3,
+      .contact-form-container h3 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+      }
+
+      .contact-info-list {
+        list-style: none;
+      }
+
+      .contact-info-list li {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+      }
+
+      .contact-info-list i {
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        width: 30px;
+        text-align: center;
+        margin-right: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+      .dark-mode .form-control {
+        background-color: #333;
+        border-color: var(--border-color-dark);
+        color: var(--text-light);
+      }
+
+      #form-feedback {
+        display: none;
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 4px;
+        background-color: var(--success-color);
+        color: white;
+        text-align: center;
+      }
+
+      @media (max-width: 992px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .header-container {
+          flex-direction: column;
+        }
+        nav ul {
+          margin-top: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header (identique, aucune modification nécessaire) -->
+    <header>
+      <div class="container header-container">
+        <div class="logo">KISHIBISHA</div>
+        <
+        <nav>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="reservation.html">Réservation</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="Connexion.html">Connexion/Inscription</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- CHANGEMENT 4: Contenu principal de la page Contact -->
+      <section class="page-header">
+        <h2>Nous Contacter</h2>
+        <p>Une question ? Une suggestion ? N'hésitez pas à nous écrire.</p>
+      </section>
+
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Colonne 1: Informations de contact -->
+          <div class="contact-details">
+            <h3>Nos Coordonnées</h3>
+            <ul class="contact-info-list">
+              <li>
+                <i>📍</i>
+                <span
+                  >avenu.../Ibanda, Bukavu, République Démocratique du
+                  congo</span
+                >
+              </li>
+              <li><i>📞</i> <a href="tel:+243971897692">+243 971897692</a></li>
+              <li>
+                <i>✉️</i>
+                <a href="justinmuganza09@gmail.com"
+                  >justinmuganza09@gmail.com</a
+                >
+              </li>
+            </ul>
+            <hr style="margin: 2rem 0; border-color: var(--border-color)" />
+            <h3>Horaires d'ouverture</h3>
+            <ul class="contact-info-list">
+              <li>
+                <i>🗓️</i>
+                <span
+                  ><strong>Lundi - Vendredi:</strong> 12:00 - 15:00 & 19:00 -
+                  23:00</span
+                >
+              </li>
+              <li>
+                <i>🗓️</i>
+                <span><strong>Samedi - Dimanche:</strong> 12:00 - 23:30</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Colonne 2: Formulaire de contact -->
+          <div class="contact-form-container">
+            <h3>Envoyez-nous un message</h3>
+            <form id="contactForm">
+              <div class="form-group">
+                <label for="contactName">Votre Nom</label>
+                <input
+                  type="text"
+                  id="contactName"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="contactEmail">Votre Email</label>
+                <input
+                  type="email"
+                  id="contactEmail"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="contactSubject">Sujet</label>
+                <input type="text" id="contactSubject" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label for="contactMessage">Votre Message</label>
+                <textarea
+                  id="contactMessage"
+                  class="form-control"
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" class="btn btn-block">
+                Envoyer le message
+              </button>
+            </form>
+            <div id="form-feedback"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer (identique, aucune modification nécessaire) -->
+    <footer>
+      <div class="container footer-content">
+        <div class="logo" style="margin-bottom: 1rem">KISHIBISHA</div>
+        <p>© 2025 BAC 2 IG GROUPE 1 TP MARKETING TOUS DROIT RÉSERVÉ</p>
+      </div>
+    </footer>
+
+    <script>
+      // Gestion du thème clair/sombre (identique)
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark-mode")
+        );
+      }
+
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+
+      window.addEventListener("storage", function (e) {
+        if (e.key === "darkMode") {
+          document.body.classList.toggle("dark-mode", e.newValue === "true");
+        }
+      });
+
+      // CHANGEMENT 5: SCRIPT POUR LE FORMULAIRE DE CONTACT
+      const contactForm = document.getElementById("contactForm");
+      const formFeedback = document.getElementById("form-feedback");
+
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault(); // Empêche l'envoi réel du formulaire
+
+        // Récupération des données (ici, on ne les envoie nulle part)
+        const name = document.getElementById("contactName").value;
+
+        // Affichage du message de confirmation
+        formFeedback.textContent = `Merci ${name}, votre message a bien été envoyé ! Nous vous répondrons dès que possible.`;
+        formFeedback.style.display = "block";
+
+        // On cache le message après quelques secondes et on réinitialise le formulaire
+        setTimeout(() => {
+          formFeedback.style.display = "none";
+          contactForm.reset();
+        }, 5000); // Le message reste affiché 5 secondes
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KISHIBISHA - Menu & Réservation</title>
+    <style>
+      /* Styles de base */
+      :root {
+        --primary-color: #e74c3c;
+        --secondary-color: #3498db;
+        --dark-color: #2c3e50;
+        --light-color: #ecf0f1;
+        --success-color: #2ecc71;
+        --warning-color: #f39c12;
+        --text-dark: #333;
+        --text-light: #fff;
+        --bg-light: #fff;
+        --bg-dark: #1a1a1a;
+        --card-bg-light: #f9f9f9;
+        --card-bg-dark: #2d2d2d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      body.dark-mode {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Bouton de test */
+      .demo-btn-container {
+        padding: 2rem;
+        text-align: center;
+      }
+
+      /* Styles du modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      .modal-content {
+        background-color: var(--card-bg-light);
+        margin: 5% auto;
+        padding: 2rem;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 500px;
+        position: relative;
+        animation: modalopen 0.3s ease-out;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .dark-mode .modal-content {
+        background-color: var(--card-bg-dark);
+      }
+
+      .close-btn {
+        position: absolute;
+        right: 1.5rem;
+        top: 1.5rem;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: var(--primary-color);
+        background: none;
+        border: none;
+      }
+
+      /* Styles du formulaire */
+      .reservation-form {
+        margin-top: 1rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.2rem;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: var(--primary-color);
+      }
+
+      .form-control,
+      .dish-select {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      .dark-mode .form-control,
+      .dark-mode .dish-select {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        border-color: #555;
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: var(--text-light);
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 1rem;
+      }
+
+      .btn:hover {
+        background-color: #c0392b;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-block {
+        display: block;
+        width: 100%;
+        margin-top: 1.5rem;
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+
+      /* Sélection de plat */
+      .dish-selection {
+        margin-bottom: 1.5rem;
+      }
+
+      .dish-select {
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e74c3c'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 0.7rem center;
+        background-size: 1.2rem;
+        padding-right: 2.5rem;
+      }
+
+      .dark-mode .dish-select {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23e74c3c'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+      }
+
+      /* Affichage du plat sélectionné */
+      .selected-dish {
+        background-color: rgba(231, 76, 60, 0.1);
+        padding: 1.2rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid var(--primary-color);
+        display: none;
+      }
+
+      .selected-dish h3 {
+        margin-top: 0;
+        color: var(--primary-color);
+        font-size: 1.2rem;
+      }
+
+      .selected-dish p {
+        font-weight: bold;
+        font-size: 1.1rem;
+        margin-bottom: 0;
+      }
+
+      /* Animation */
+      @keyframes modalopen {
+        from {
+          opacity: 0;
+          transform: translateY(-30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .modal-content {
+          margin: 10% auto;
+          width: 95%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Bouton de démo pour tester la modal -->
+    <div class="container demo-btn-container">
+      <h1>Notre Menu</h1>
+      <button
+        class="btn"
+        onclick="showReservationModal('Entrecôte Angus', 28.90)"
+      >
+        Réserver un Plat
+      </button>
+    </div>
+
+    <!-- Voici comment on a fait pour reserver -->
+    <div id="reservationModal" class="modal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()">&times;</button>
+        <h2 style="margin-bottom: 1.5rem">Réservation</h2>
+
+        <form id="bookingForm" class="reservation-form">
+          <!-- Sélection du plat -->
+          <div class="form-group dish-selection">
+            <label for="dishSelect">Choisissez votre plat*</label>
+            <select id="dishSelect" class="dish-select" required>
+              <option value="">-- Sélectionnez un plat --</option>
+              <option value="Salade César" data-price="12.50">
+                Salade César - 12,50 $
+              </option>
+              <option value="Tartare de Saumon" data-price="14.90">
+                Tartare de Saumon - 14,90 $
+              </option>
+              <option value="Foie Gras Maison" data-price="18.50">
+                Foie Gras Maison - 18,50 $
+              </option>
+              <option value="Entrecôte Angus" data-price="28.90">
+                Entrecôte Angus - 28,90 $
+              </option>
+              <option value="Pizza Truffe" data-price="22.50">
+                Pizza Truffe - 22,50 $
+              </option>
+              <option value="Risotto Fruits de Mer" data-price="26.90">
+                Risotto Fruits de Mer - 26,90 $
+              </option>
+              <option value="Poulet Fermier Rôti" data-price="21.50">
+                Poulet Fermier Rôti - 21,50 $
+              </option>
+              <option value="Burger Gourmet" data-price="18.90">
+                Burger Gourmet - 18,90 $
+              </option>
+              <option value="Dos de Bar Grillée" data-price="29.50">
+                Dos de Bar Grillée - 29,50 $
+              </option>
+              <option value="Saumon Gravadlax" data-price="25.90">
+                Saumon Gravadlax - 25,90 $
+              </option>
+              <option value="Dessert du Chef" data-price="9.90">
+                Dessert du Chef - 9,90 $
+              </option>
+              <option value="Fondant au Chocolat" data-price="8.50">
+                Fondant au Chocolat - 8,50 $
+              </option>
+              <option value="Tarte Tatin" data-price="8.90">
+                Tarte Tatin - 8,90 $
+              </option>
+            </select>
+          </div>
+
+          <!-- Affichage du plat sélectionné (ici on affiche les plats qui sont sellectionnés) -->
+          <div id="selectedDishInfo" class="selected-dish">
+            <h3 id="modalDishTitle"></h3>
+            <p id="modalDishPrice"></p>
+          </div>
+
+          <!-- Informations personnelles -->
+          <div class="form-group">
+            <label for="name">Nom complet</label>
+            <input type="text" id="name" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Téléphone</label>
+            <input type="tel" id="phone" class="form-control" required />
+          </div>
+
+          <!-- Détails de la réservation -->
+          <div class="form-group">
+            <label for="date">Date de réservation</label>
+            <input type="date" id="date" class="form-control" required />
+          </div>
+
+          <div class="form-group">
+            <label for="time">Heure</label>
+            <input
+              type="time"
+              id="time"
+              class="form-control"
+              required
+              min="11:00"
+              max="22:00"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="guests">Nombre de personnes*</label>
+            <select id="guests" class="form-control" required>
+              <option value="">-- Sélectionnez --</option>
+              <option value="1">1 personne</option>
+              <option value="2">2 personnes</option>
+              <option value="3">3 personnes</option>
+              <option value="4">4 personnes</option>
+              <option value="5">5 personnes</option>
+              <option value="6">6 personnes</option>
+              <option value="7">7 personnes</option>
+              <option value="8">8+ personnes</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="notes">Demandes spéciales</label>
+            <textarea
+              id="notes"
+              class="form-control"
+              rows="3"
+              placeholder="Allergies, préférences alimentaires..."
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-block">
+            Confirmer la réservation
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Gestion du thème clair/sombre
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark-mode")
+        );
+      }
+
+      // Vérifier le thème au chargement
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+
+      // Variables pour stocker les infos du plat sélectionné
+      let currentDish = {
+        name: "",
+        price: 0,
+      };
+
+      // Afficher le modal de réservation avec un plat spécifique
+      function showReservationModal(dishName, price) {
+        const modal = document.getElementById("reservationModal");
+        const dishSelect = document.getElementById("dishSelect");
+
+        // Trouver et sélectionner le plat dans le menu déroulant
+        for (let i = 0; i < dishSelect.options.length; i++) {
+          if (dishSelect.options[i].value === dishName) {
+            dishSelect.selectedIndex = i;
+            dishSelect.dispatchEvent(new Event("change"));
+            break;
+          }
+        }
+
+        modal.style.display = "block";
+      }
+
+      // Fermer le modal
+      function closeModal() {
+        document.getElementById("reservationModal").style.display = "none";
+      }
+
+      // Mise à jour de l'affichage du plat sélectionné
+      document
+        .getElementById("dishSelect")
+        .addEventListener("change", function () {
+          const selectedOption = this.options[this.selectedIndex];
+          const dishInfo = document.getElementById("selectedDishInfo");
+
+          if (selectedOption.value) {
+            currentDish = {
+              name: selectedOption.value,
+              price: parseFloat(selectedOption.getAttribute("data-price")),
+            };
+
+            document.getElementById("modalDishTitle").textContent =
+              currentDish.name;
+            document.getElementById(
+              "modalDishPrice"
+            ).textContent = `${currentDish.price.toFixed(2)} €`;
+            dishInfo.style.display = "block";
+          } else {
+            dishInfo.style.display = "none";
+          }
+        });
+
+      // Gestion de la soumission du formulaire
+      document
+        .getElementById("bookingForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Récupérer les valeurs du formulaire
+          const formData = {
+            dish: currentDish.name,
+            price: currentDish.price,
+            name: document.getElementById("name").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            date: document.getElementById("date").value,
+            time: document.getElementById("time").value,
+            guests: document.getElementById("guests").value,
+            notes: document.getElementById("notes").value,
+            status: "pending",
+            reservationId: "RSV-" + Date.now(),
+          };
+
+          // Stocker la réservation
+          let reservations = JSON.parse(
+            localStorage.getItem("reservations") || "[]"
+          );
+          reservations.push(formData);
+          localStorage.setItem("reservations", JSON.stringify(reservations));
+
+          // Afficher confirmation
+          alert(
+            `Merci ${formData.name} !\nVotre réservation pour "${formData.dish}" est confirmée pour le ${formData.date} à ${formData.time}.\n\nUn email de confirmation vous a été envoyé à ${formData.email}.`
+          );
+
+          // Réinitialiser et fermer
+          this.reset();
+          closeModal();
+
+          // Réinitialiser la sélection du plat
+          document.getElementById("dishSelect").selectedIndex = 0;
+          document.getElementById("selectedDishInfo").style.display = "none";
+        });
+
+      // Fermer le modal si on clique en dehors
+      window.addEventListener("click", function (event) {
+        const modal = document.getElementById("reservationModal");
+        if (event.target === modal) {
+          closeModal();
+        }
+      });
+
+      // Validation de la date (au moins aujourd'hui)
+      document.getElementById("date").addEventListener("input", function () {
+        const today = new Date().toISOString().split("T")[0];
+        if (this.value < today) {
+          this.setCustomValidity("La date doit être aujourd'hui ou ultérieure");
+        } else {
+          this.setCustomValidity("");
+        }
+      });
+
+      // Initialisation
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialiser le thème
+        if (localStorage.getItem("darkMode") === "true") {
+          document.body.classList.add("dark-mode");
+        }
+
+        // Pré-remplir la date du jour par défaut
+        const today = new Date().toISOString().split("T")[0];
+        document.getElementById("date").value = today;
+      });
+    </script>
+  </body>
+</html>

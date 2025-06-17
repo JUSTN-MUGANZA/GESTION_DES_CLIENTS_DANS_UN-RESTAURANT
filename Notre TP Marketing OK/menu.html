@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KISHIBISHA - Notre Menu</title>
+    <style>
+      /* Styles de base conservés */
+      :root {
+        --primary-color: #e74c3c;
+        --secondary-color: #3498db;
+        --dark-color: #2c3e50;
+        --light-color: #ecf0f1;
+        --success-color: #2ecc71;
+        --warning-color: #f39c12;
+        --text-dark: #333;
+        --text-light: #fff;
+        --bg-light: #fff;
+        --bg-dark: #1a1a1a;
+        --card-bg-light: #f9f9f9;
+        --card-bg-dark: #2d2d2d;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        transition: background-color 0.3s, color 0.3s;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        background-color: var(--bg-light);
+        color: var(--text-dark);
+      }
+
+      body.dark-mode {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Header */
+      header {
+        background-color: var(--primary-color);
+        color: var(--text-light);
+        padding: 1rem 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      .dark-mode header {
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+      }
+
+      nav ul li {
+        margin-left: 1.5rem;
+      }
+
+      nav ul li a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-weight: 500;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+
+      nav ul li a:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      .theme-toggle {
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.2rem;
+        cursor: pointer;
+        padding: 0.5rem;
+        border-radius: 50%;
+      }
+
+      .theme-toggle:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Styles spécifiques au menu */
+      .menu-category {
+        margin: 3rem 0 2rem;
+      }
+
+      .menu-category h2 {
+        color: var(--primary-color);
+        border-bottom: 2px solid var(--primary-color);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+      }
+
+      .menu-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+      }
+
+      .menu-item {
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        background-color: var(--card-bg-light);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .dark-mode .menu-item {
+        background-color: var(--card-bg-dark);
+        border-color: #444;
+      }
+
+      .menu-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .menu-item-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+      }
+
+      .menu-item-content {
+        padding: 1.5rem;
+      }
+
+      .menu-item-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .menu-item-title {
+        font-size: 1.3rem;
+        font-weight: 600;
+      }
+
+      .menu-item-price {
+        font-weight: bold;
+        color: var(--primary-color);
+        font-size: 1.2rem;
+      }
+
+      .menu-item-description {
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+      }
+
+      .dark-mode .menu-item-description {
+        color: var(--text-light);
+      }
+
+      .menu-item-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .menu-item-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .tag {
+        background-color: var(--primary-color);
+        color: white;
+        padding: 0.3rem 0.6rem;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 500;
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: var(--primary-color);
+        color: var(--text-light);
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 0.9rem;
+      }
+
+      .btn:hover {
+        background-color: #c0392b;
+      }
+
+      /* Footer */
+      footer {
+        background-color: black;
+        color: var(--text-light);
+        padding: 2rem 0;
+        text-align: center;
+        margin-top: 3rem;
+      }
+
+      .footer-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .social-links {
+        margin: 1rem 0;
+      }
+
+      .social-links a {
+        color: var(--text-light);
+        margin: 0 0.5rem;
+        font-size: 1.5rem;
+        text-decoration: none;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .header-container {
+          flex-direction: column;
+        }
+
+        nav ul {
+          margin-top: 1rem;
+        }
+
+        nav ul li {
+          margin-left: 1rem;
+          margin-right: 1rem;
+        }
+
+        .menu-items {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 480px) {
+        nav ul {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        nav ul li {
+          margin: 0.5rem 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- en tete de notre page -->
+    <header>
+      <div class="container header-container">
+        <div class="logo">KISHIBISHA</div>
+        <nav>
+          <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="reservation.html">Réservation</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="apropos.html">À propos</a></li>
+            <li><a href="Connexion.html">Connexion/Inscription</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+      </div>
+    </header>
+
+    <main class="container">
+      <!-- Entrées -->
+      <section class="menu-category">
+        <h2>Entrées</h2>
+        <div class="menu-items">
+          <!-- Plat 1 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Salade César"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Salade César</h3>
+                <span class="menu-item-price">12,50 $</span>
+              </div>
+              <p class="menu-item-description">
+                Laitue romaine fraîche, croûtons maison, parmesan Reggiano et
+                notre fameuse sauce César préparée quotidiennement.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Végétarien</span>
+                  <span class="tag">Signature</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Salade César', 12.50)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 2 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Tartare de Saumon"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Tartare de Saumon</h3>
+                <span class="menu-item-price">14,90 $</span>
+              </div>
+              <p class="menu-item-description">
+                Saumon frais coupé au couteau, avocat crémeux, citron vert et
+                aneth, servi avec des blinis maison.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Poisson</span>
+                  <span class="tag">Frais</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Tartare de Saumon', 14.90)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 3 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Foie Gras Maison"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Foie Gras Maison</h3>
+                <span class="menu-item-price">18,50 $</span>
+              </div>
+              <p class="menu-item-description">
+                Foie gras de canard mi-cuit, préparé par nos soins, servi avec
+                confiture d'oignons et pain brioché toasté.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Signature</span>
+                  <span class="tag">Maison</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Foie Gras Maison', 18.50)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Plats Principaux -->
+      <section class="menu-category">
+        <h2>Plats Principaux</h2>
+        <div class="menu-items">
+          <!-- Plat 4 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1565557623262-b51c2513a641?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Entrecôte Angus"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Entrecôte Angus</h3>
+                <span class="menu-item-price">28,90 $</span>
+              </div>
+              <p class="menu-item-description">
+                Entrecôte de bœuf Angus 300g, maturation 28 jours, accompagnée
+                de frites maison et de notre sélection de sauces.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Viande</span>
+                  <span class="tag">Premium</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Entrecôte Angus', 28.90)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 5 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Pizza Truffe"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Pizza Truffe</h3>
+                <span class="menu-item-price">22,50 $</span>
+              </div>
+              <p class="menu-item-description">
+                Pâte fine croustillante, crème fraîche, mozzarella di buffala,
+                champignons de Paris et généreuses lamelles de truffe noire.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Végétarien</span>
+                  <span class="tag">Truffe</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Pizza Truffe', 22.50)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 6 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Risotto aux Fruits de Mer"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Risotto Fruits de Mer</h3>
+                <span class="menu-item-price">26,90 $</span>
+              </div>
+              <p class="menu-item-description">
+                Risotto crémeux au safran, moules, calamars et gambas fraîches,
+                parfumé à l'ail et au persil.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Fruits de mer</span>
+                  <span class="tag">Maison</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Risotto Fruits de Mer', 26.90)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 7 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1601050690597-df0568f70950?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Poulet Fermier"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Poulet Fermier Rôti</h3>
+                <span class="menu-item-price">21,50 $</span>
+              </div>
+              <p class="menu-item-description">
+                Poulet fermier élevé en plein air, rôti au four avec des herbes
+                de Provence, servi avec gratin dauphinois et légumes de saison.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Volaille</span>
+                  <span class="tag">Ferme</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Poulet Fermier Rôti', 21.50)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 8 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Burger Gourmet"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Burger Gourmet</h3>
+                <span class="menu-item-price">18,90 $</span>
+              </div>
+              <p class="menu-item-description">
+                Pain brioché maison, steak haché 180g de race Angus, cheddar
+                affiné, bacon croustillant, oignons caramélisés et sauce
+                spéciale.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Viande</span>
+                  <span class="tag">Gourmet</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Burger Gourmet', 18.90)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Poissons -->
+      <section class="menu-category">
+        <h2>Poissons</h2>
+        <div class="menu-items">
+          <!-- Plat 9 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1561154464-82e9adf32764?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Dos de Bar"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Dos de Bar Grillée</h3>
+                <span class="menu-item-price">29,50 $</span>
+              </div>
+              <p class="menu-item-description">
+                Dos de bar frais grillé à la plancha, écrasé de pommes de terre
+                à l'huile d'olive et émulsion de citron confit.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Poisson</span>
+                  <span class="tag">Frais</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Dos de Bar Grillée', 29.50)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 10 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1563379926898-05f4575a45d8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Saumon Gravadlax"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Saumon Gravadlax</h3>
+                <span class="menu-item-price">25,90 $</span>
+              </div>
+              <p class="menu-item-description">
+                Saumon mariné maison à l'aneth et au citron, servi avec une
+                salade de jeunes pousses et sauce moutarde à l'ancienne.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Poisson</span>
+                  <span class="tag">Mariné</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Saumon Gravadlax', 25.90)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Desserts -->
+      <section class="menu-category">
+        <h2>Desserts</h2>
+        <div class="menu-items">
+          <!-- Plat 11 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Dessert du Chef"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Dessert du Chef</h3>
+                <span class="menu-item-price">9,90 $</span>
+              </div>
+              <p class="menu-item-description">
+                Une création sucrée surprise préparée chaque jour par notre
+                pâtissier avec les produits de saison.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Signature</span>
+                  <span class="tag">Saison</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Dessert du Chef', 9.90)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 12 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Fondant au Chocolat"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Fondant au Chocolat</h3>
+                <span class="menu-item-price">8,50 $</span>
+              </div>
+              <p class="menu-item-description">
+                Fondant moelleux au cœur coulant de chocolat Valrhona, servi
+                avec une boule de glace vanille de Madagascar.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Chocolat</span>
+                  <span class="tag">Classique</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Fondant au Chocolat', 8.50)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 13 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Tarte Tatin"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Tarte Tatin</h3>
+                <span class="menu-item-price">8,90 $</span>
+              </div>
+              <p class="menu-item-description">
+                Tarte renversée aux pommes caramélisées, pâte feuilletée maison,
+                servie tiède avec une crème fraîche fouettée.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Fruit</span>
+                  <span class="tag">Tradition</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Tarte Tatin', 8.90)"
+                >
+                  Réserver
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Boissons -->
+      <section class="menu-category">
+        <h2>Boissons</h2>
+        <div class="menu-items">
+          <!-- Plat 14 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Sélection de Vins"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Sélection de Vins</h3>
+                <span class="menu-item-price">À partir de 6,50 $</span>
+              </div>
+              <p class="menu-item-description">
+                Découvrez notre carte des vins soigneusement sélectionnés parmi
+                les meilleurs terroirs français et internationaux.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Vin</span>
+                  <span class="tag">Sélection</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Sélection de Vins', 6.50)"
+                >
+                  Découvrir
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plat 15 -->
+          <div class="menu-item">
+            <img
+              src="https://images.unsplash.com/photo-1551024506-0bccd828d307?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+              alt="Cocktails Signature"
+              class="menu-item-img"
+            />
+            <div class="menu-item-content">
+              <div class="menu-item-header">
+                <h3 class="menu-item-title">Cocktails Signature</h3>
+                <span class="menu-item-price">12,90 $</span>
+              </div>
+              <p class="menu-item-description">
+                Nos cocktails créatifs préparés avec des ingrédients frais et
+                des alcools premium par notre barman expérimenté.
+              </p>
+              <div class="menu-item-footer">
+                <div class="menu-item-tags">
+                  <span class="tag">Cocktail</span>
+                  <span class="tag">Maison</span>
+                </div>
+                <button
+                  class="btn"
+                  onclick="showReservationModal('Cocktails Signature', 12.90)"
+                >
+                  Découvrir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal de réservation -->
+    <div id="reservationModal" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="modalDishTitle"></h2>
+        <p id="modalDishPrice"></p>
+        <p>
+          Pour réserver ce plat, veuillez remplir le formulaire de réservation.
+        </p>
+        <a href="reservation.html" class="btn">Aller à la réservation</a>
+      </div>
+    </div>
+
+    <style>
+      /* Styles pour le modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      .modal-content {
+        background-color: var(--card-bg-light);
+        margin: 10% auto;
+        padding: 2rem;
+        border-radius: 8px;
+        width: 80%;
+        max-width: 500px;
+        position: relative;
+      }
+
+      .dark-mode .modal-content {
+        background-color: var(--card-bg-dark);
+      }
+
+      .close-btn {
+        position: absolute;
+        right: 1rem;
+        top: 1rem;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+    </style>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container footer-content">
+        <div class="logo" style="margin-bottom: 1rem">KISHIBISHA</div>
+        <div class="social-links">
+          <a href="https://x.com/JustinMuganzaL?t=iWLivT1lK_VADpCVCRcfKA&s=09"
+            >𝕏</a
+          >
+          <a href="https://www.facebook.com/justinlubungamuganza.muganza">f</a>
+          <a href="https://www.google.com">📱</a>
+        </div>
+        <p>© 2025 BAC 2 IG GROUPE 1 TP MARKETING TOUS DROIT RÉSERVÉ</p>
+      </div>
+    </footer>
+
+    <script>
+      // Gestion du thème clair/sombre
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "darkMode",
+          document.body.classList.contains("dark-mode")
+        );
+      }
+
+      // Vérifier le thème au chargement
+      if (localStorage.getItem("darkMode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
+
+      // Gestion du modal de réservation
+      function showReservationModal(dishName, price) {
+        const modal = document.getElementById("reservationModal");
+        const titleElement = document.getElementById("modalDishTitle");
+        const priceElement = document.getElementById("modalDishPrice");
+
+        titleElement.textContent = dishName;
+        priceElement.textContent = `${price.toFixed(2)} €`;
+        modal.style.display = "block";
+      }
+
+      function closeModal() {
+        document.getElementById("reservationModal").style.display = "none";
+      }
+
+      // Fermer le modal si on clique en dehors
+      window.onclick = function (event) {
+        const modal = document.getElementById("reservationModal");
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
